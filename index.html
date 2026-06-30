@@ -1,0 +1,515 @@
+import React, { useState } from 'react';
+import { BookOpen, PenTool, CheckSquare, Award, CheckCircle2, XCircle, AlertCircle, RefreshCw, Calculator, TrendingDown, TrendingUp, ArrowLeft, ArrowRight } from 'lucide-react';
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('materi');
+
+  // State untuk Lembar Aktivitas
+  const [activityAnswers, setActivityAnswers] = useState({});
+  const [activityFeedback, setActivityFeedback] = useState(null);
+
+  // State untuk Kuis
+  const [quizScore, setQuizScore] = useState(null);
+  const [quizAnswers, setQuizAnswers] = useState({});
+
+  // State untuk Ulangan Harian
+  const [ulanganAnswers, setUlanganAnswers] = useState({});
+  const [ulanganScore, setUlanganScore] = useState(null);
+
+  const tabs = [
+    { id: 'materi', label: 'Materi', icon: <BookOpen className="w-5 h-5" /> },
+    { id: 'aktivitas', label: 'Aktivitas', icon: <PenTool className="w-5 h-5" /> },
+    { id: 'kuis', label: 'Kuis Singkat', icon: <CheckSquare className="w-5 h-5" /> },
+    { id: 'ulangan', label: 'Ulangan Harian', icon: <Award className="w-5 h-5" /> }
+  ];
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    window.scrollTo(0, 0);
+  };
+
+  // --- MATERI COMPONENT ---
+  const MateriSection = () => (
+    <div className="space-y-8 animate-fadeIn">
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-lg">
+        <h2 className="text-3xl font-bold mb-4">Operasi Bilangan Bulat</h2>
+        <p className="text-lg opacity-90">
+          Tahukah kamu bahwa bilangan bulat ada di mana-mana dalam kehidupan kita sehari-hari? Mari kita pelajari bagaimana bilangan positif dan negatif bekerja!
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-xl shadow border border-gray-100">
+          <div className="flex items-center gap-3 mb-4 text-blue-600">
+            <TrendingDown className="w-6 h-6" />
+            <h3 className="text-xl font-bold">Konteks Suhu (Temperatur)</h3>
+          </div>
+          <p className="text-gray-600 mb-3">
+            Di daerah dataran tinggi seperti Dieng, suhu bisa sangat dingin. Jika termometer menunjukkan angka 5 derajat di bawah nol, kita menuliskannya sebagai <strong>-5°C</strong>.
+          </p>
+          <div className="bg-blue-50 p-4 rounded-lg text-sm border border-blue-100">
+            <strong>Contoh:</strong> Suhu awal -2°C. Lalu turun lagi 3°C. <br/>
+            Secara matematika: (-2) - 3 = -5. <br/>
+            Suhu sekarang adalah -5°C.
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow border border-gray-100">
+          <div className="flex items-center gap-3 mb-4 text-green-600">
+            <TrendingUp className="w-6 h-6" />
+            <h3 className="text-xl font-bold">Konteks Ketinggian</h3>
+          </div>
+          <p className="text-gray-600 mb-3">
+            Permukaan laut dianggap sebagai titik nol (0 meter). Gunung berada di bilangan positif, sedangkan penyelam atau kapal selam berada di bilangan negatif.
+          </p>
+          <div className="bg-green-50 p-4 rounded-lg text-sm border border-green-100">
+            <strong>Contoh:</strong> Kapal selam berada di kedalaman 20 m (ditulis -20). Kapal itu naik 15 m. <br/>
+            Secara matematika: (-20) + 15 = -5. <br/>
+            Kapal sekarang ada di kedalaman 5 m (-5 m).
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white p-6 rounded-xl shadow border border-gray-100">
+        <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><Calculator className="w-6 h-6 text-purple-600" /> Aturan Operasi Dasar</h3>
+        
+        <div className="space-y-6">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2 border-b pb-1">1. Penjumlahan & Pengurangan</h4>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+              <li>Punya hutang (negatif) ditambah hutang lagi, hutangnya makin besar.<br/><span className="font-mono bg-gray-100 px-1 rounded">-3 + (-2) = -5</span></li>
+              <li>Punya uang (positif) dipakai bayar hutang (negatif).<br/><span className="font-mono bg-gray-100 px-1 rounded">5 + (-3) = 2</span></li>
+              <li>Pengurangan dengan bilangan negatif sama dengan penjumlahan.<br/><span className="font-mono bg-gray-100 px-1 rounded">4 - (-2) = 4 + 2 = 6</span></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2 border-b pb-1">2. Perkalian & Pembagian</h4>
+            <div className="grid grid-cols-2 gap-4 text-center">
+              <div className="bg-indigo-50 p-3 rounded text-indigo-800 font-medium border border-indigo-100">
+                (+) × (+) = (+) <br/>
+                (-) × (-) = (+)
+                <div className="text-xs mt-1 font-normal text-indigo-600">Tanda sama menjadi Positif</div>
+              </div>
+              <div className="bg-orange-50 p-3 rounded text-orange-800 font-medium border border-orange-100">
+                (+) × (-) = (-) <br/>
+                (-) × (+) = (-)
+                <div className="text-xs mt-1 font-normal text-orange-600">Tanda beda menjadi Negatif</div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-2 italic">*Aturan tanda ini juga berlaku persis sama untuk pembagian.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // --- AKTIVITAS COMPONENT ---
+  const AktivitasSection = () => {
+    const questions = [
+      { id: 'a1', text: "Suhu udara di Puncak Jaya Wijaya mencapai 7 derajat Celcius di bawah nol.", answer: "-7" },
+      { id: 'a2', text: "Sebuah pesawat terbang mengudara pada ketinggian 5.000 meter di atas permukaan laut.", answer: "5000" },
+      { id: 'a3', text: "Ibu Anita meminjam uang (berhutang) ke koperasi sebesar Rp 150.000.", answer: "-150000" },
+      { id: 'a4', text: "Lumba-lumba berenang pada kedalaman 12 meter di bawah permukaan air laut.", answer: "-12" }
+    ];
+
+    const checkActivity = () => {
+      let correct = 0;
+      questions.forEach(q => {
+        if (activityAnswers[q.id] === q.answer) correct++;
+      });
+      setActivityFeedback(`Kamu menjawab ${correct} dari ${questions.length} dengan benar!`);
+    };
+
+    return (
+      <div className="bg-white p-6 rounded-xl shadow-lg animate-fadeIn border border-gray-100">
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">Lembar Aktivitas: Menerjemahkan Konteks</h2>
+        <p className="text-gray-600 mb-6 pb-4 border-b">Tuliskan representasi bilangan bulat dari situasi di bawah ini (gunakan tanda minus '-' untuk negatif, tanpa titik pemisah ribuan, misal: -100 atau 2500).</p>
+        
+        <div className="space-y-4">
+          {questions.map((q, idx) => (
+            <div key={q.id} className="flex flex-col md:flex-row md:items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200 gap-4">
+              <div className="flex items-start gap-3 flex-1">
+                <span className="bg-blue-100 text-blue-800 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0">{idx + 1}</span>
+                <p className="text-gray-700">{q.text}</p>
+              </div>
+              <input
+                type="text"
+                placeholder="..."
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none w-full md:w-32 text-center font-mono"
+                value={activityAnswers[q.id] || ''}
+                onChange={(e) => setActivityAnswers({...activityAnswers, [q.id]: e.target.value.trim()})}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <button 
+            onClick={checkActivity}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors w-full md:w-auto"
+          >
+            Cek Jawaban
+          </button>
+          
+          {activityFeedback && (
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium w-full md:w-auto ${activityFeedback.includes(questions.length) ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'}`}>
+              {activityFeedback.includes(questions.length) ? <CheckCircle2 className="w-5 h-5"/> : <AlertCircle className="w-5 h-5"/>}
+              {activityFeedback}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // --- KUIS COMPONENT ---
+  const KuisSection = () => {
+    const questions = [
+      { id: 'q1', text: "Hasil dari (-12) + 7 adalah...", options: ["-19", "-5", "5", "19"], answer: "-5" },
+      { id: 'q2', text: "Suhu pagi hari -2°C. Pada siang hari suhu naik 8°C. Suhu siang hari adalah...", options: ["-10°C", "-6°C", "6°C", "10°C"], answer: "6°C" },
+      { id: 'q3', text: "Hasil dari (-4) × (-5) adalah...", options: ["-20", "-9", "9", "20"], answer: "20" },
+      { id: 'q4', text: "Seekor ikan berenang di kedalaman 15m. Burung camar terbang 10m di atas laut. Jarak vertikal keduanya adalah...", options: ["-5m", "5m", "25m", "-25m"], answer: "25m" }
+    ];
+
+    const submitQuiz = () => {
+      let score = 0;
+      questions.forEach(q => {
+        if (quizAnswers[q.id] === q.answer) score++;
+      });
+      setQuizScore(score);
+    };
+
+    return (
+      <div className="bg-white p-6 rounded-xl shadow-lg animate-fadeIn border border-gray-100">
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">Kuis Singkat</h2>
+        <p className="text-gray-600 mb-6">Uji pemahaman dasar operasi bilangan bulatmu di sini!</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {questions.map((q, idx) => (
+            <div key={q.id} className={`p-5 rounded-xl border-2 transition-all ${quizScore !== null ? (quizAnswers[q.id] === q.answer ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50') : 'border-gray-100 bg-gray-50 hover:border-blue-200'}`}>
+              <p className="font-medium text-gray-800 mb-4">{idx + 1}. {q.text}</p>
+              <div className="grid grid-cols-2 gap-2">
+                {q.options.map(opt => (
+                  <button
+                    key={opt}
+                    disabled={quizScore !== null}
+                    onClick={() => setQuizAnswers({...quizAnswers, [q.id]: opt})}
+                    className={`p-2 rounded border text-sm font-medium transition-colors ${
+                      quizAnswers[q.id] === opt 
+                        ? (quizScore !== null 
+                            ? (opt === q.answer ? 'bg-green-500 text-white border-green-600' : 'bg-red-500 text-white border-red-600')
+                            : 'bg-blue-500 text-white border-blue-600')
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                    } ${quizScore !== null && opt === q.answer && quizAnswers[q.id] !== opt ? 'bg-green-100 border-green-500 text-green-800 ring-2 ring-green-400' : ''}`}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {quizScore === null ? (
+          <button 
+            onClick={submitQuiz}
+            disabled={Object.keys(quizAnswers).length < questions.length}
+            className="mt-8 w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl transition-colors"
+          >
+            Kumpulkan Kuis
+          </button>
+        ) : (
+          <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100 flex flex-col items-center">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">Skor Kamu: {quizScore} / {questions.length}</h3>
+            <p className="text-gray-600 mb-4">
+              {quizScore === questions.length ? 'Luar biasa! Pemahamanmu sangat kuat.' : 'Terus berlatih ya, kamu pasti bisa!'}
+            </p>
+            <button 
+              onClick={() => { setQuizScore(null); setQuizAnswers({}); }}
+              className="flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-800"
+            >
+              <RefreshCw className="w-4 h-4" /> Ulangi Kuis
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // --- ULANGAN HARIAN COMPONENT ---
+  const UlanganSection = () => {
+    // Tipe: pg (Pilihan Ganda), pgk (Pilihan Ganda Kompleks)
+    const questions = [
+      {
+        id: 'u1', type: 'pg',
+        text: "Kapasitas lift adalah 10 orang. Sebuah lift bergerak dari lantai 1 ke lantai 6, kemudian turun 3 lantai, dan terakhir naik lagi 2 lantai. Di lantai berapakah lift tersebut sekarang berhenti?",
+        options: ["Lantai 2", "Lantai 4", "Lantai 5", "Lantai 6"],
+        answer: "Lantai 5" // 1 + 5(naik ke 6) - 3 + 2 = 5 ATAU langsung 1->6 = posisi 6. 6 - 3 = 3. 3 + 2 = 5.
+      },
+      {
+        id: 'u2', type: 'pg',
+        text: "Suhu sepotong daging beku saat dikeluarkan dari lemari pendingin adalah -8°C. Saat dimasak, suhunya naik 85°C. Setelah dihidangkan, suhunya turun perlahan sebesar 25°C. Berapa suhu daging tersebut saat ini?",
+        options: ["52°C", "60°C", "68°C", "102°C"],
+        answer: "52°C" // -8 + 85 - 25 = 77 - 25 = 52
+      },
+      {
+        id: 'u3', type: 'pgk',
+        text: "Sebuah kapal selam berada 40 meter di bawah permukaan laut. Kapal selam tersebut kemudian naik 15 meter untuk mengamati keadaan, lalu menyelam kembali sejauh 30 meter. Pilihlah pernyataan-pernyataan di bawah ini yang BENAR! (Jawaban bisa lebih dari satu)",
+        options: [
+          "Posisi awal kapal selam dapat ditulis sebagai -40 meter.",
+          "Setelah naik, posisi kapal selam berada di kedalaman 55 meter.",
+          "Setelah menyelam kembali, posisi akhir kapal selam adalah -55 meter.",
+          "Jarak pergerakan total kapal selam (naik dan turun) adalah 45 meter."
+        ],
+        answers: [
+          "Posisi awal kapal selam dapat ditulis sebagai -40 meter.",
+          "Setelah menyelam kembali, posisi akhir kapal selam adalah -55 meter.",
+          "Jarak pergerakan total kapal selam (naik dan turun) adalah 45 meter."
+        ] 
+        /* 1. True (-40)
+          2. False (-40 + 15 = -25m, not 55)
+          3. True (-25 - 30 = -55m)
+          4. True (15m naik + 30m turun = 45m bergerak)
+        */
+      },
+      {
+        id: 'u4', type: 'pgk',
+        text: "Aturan skor pada lomba Matematika: Benar (+4), Salah (-2), Tidak dijawab (-1). Dari 40 soal yang diberikan, Andi berhasil menjawab 30 soal dengan benar, dan 5 soal tidak dijawab. Manakah pernyataan yang BENAR? (Jawaban bisa lebih dari satu)",
+        options: [
+          "Andi menjawab 5 soal dengan salah.",
+          "Skor yang diperoleh Andi dari soal yang benar adalah 120.",
+          "Pengurangan skor karena jawaban salah dan tidak dijawab adalah -15.",
+          "Total skor akhir yang diperoleh Andi adalah 100."
+        ],
+        answers: [
+          "Andi menjawab 5 soal dengan salah.",
+          "Skor yang diperoleh Andi dari soal yang benar adalah 120.",
+          "Pengurangan skor karena jawaban salah dan tidak dijawab adalah -15."
+        ]
+        /*
+          Total 40. Benar 30, Kosong 5 -> Salah = 40-35 = 5. (True)
+          Skor Benar = 30 * 4 = 120. (True)
+          Skor Salah = 5 * (-2) = -10. Skor Kosong = 5 * (-1) = -5. Pengurangan total -15. (True)
+          Total skor = 120 + (-15) = 105. Pernyataan 4 False (karena tertulis 100).
+        */
+      }
+    ];
+
+    const handlePG = (qId, option) => {
+      setUlanganAnswers({...ulanganAnswers, [qId]: option});
+    };
+
+    const handlePGK = (qId, option) => {
+      const currentSelections = ulanganAnswers[qId] || [];
+      let newSelections;
+      if (currentSelections.includes(option)) {
+        newSelections = currentSelections.filter(item => item !== option);
+      } else {
+        newSelections = [...currentSelections, option];
+      }
+      setUlanganAnswers({...ulanganAnswers, [qId]: newSelections});
+    };
+
+    const submitUlangan = () => {
+      let score = 0;
+      let maxScore = questions.length; // Bobot per soal sama (1 poin)
+
+      questions.forEach(q => {
+        if (q.type === 'pg') {
+          if (ulanganAnswers[q.id] === q.answer) score++;
+        } else if (q.type === 'pgk') {
+          const userAns = ulanganAnswers[q.id] || [];
+          const correctAns = q.answers;
+          // Poin penuh jika semua pilihan benar dipilih dan tidak ada pilihan salah yang dipilih
+          const isCorrect = userAns.length === correctAns.length && userAns.every(val => correctAns.includes(val));
+          if (isCorrect) score++;
+        }
+      });
+      
+      const finalGrade = Math.round((score / maxScore) * 100);
+      setUlanganScore(finalGrade);
+    };
+
+    return (
+      <div className="bg-white p-6 rounded-xl shadow-lg animate-fadeIn border border-gray-100">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-6 border-b border-gray-200">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+              <Award className="w-8 h-8 text-yellow-500" /> Ulangan Harian
+            </h2>
+            <p className="text-gray-500 mt-1">Selesaikan semua soal kontekstual berikut dengan cermat!</p>
+          </div>
+          {ulanganScore !== null && (
+            <div className={`mt-4 md:mt-0 px-6 py-3 rounded-xl font-bold text-2xl shadow-sm border ${ulanganScore >= 75 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-red-100 text-red-700 border-red-200'}`}>
+              Nilai: {ulanganScore}
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-8">
+          {questions.map((q, idx) => (
+            <div key={q.id} className="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <div className="flex gap-4">
+                <div className="w-8 h-8 shrink-0 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm">
+                  {idx + 1}
+                </div>
+                <div className="flex-1">
+                  <p className="text-gray-800 text-lg mb-2 leading-relaxed">{q.text}</p>
+                  
+                  {q.type === 'pgk' && (
+                     <div className="mb-4 inline-flex px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded border border-yellow-200">
+                       Pilihan Ganda Kompleks (Jawaban bisa &gt; 1)
+                     </div>
+                  )}
+
+                  <div className="space-y-3 mt-4">
+                    {q.options.map(opt => {
+                      const isPGK = q.type === 'pgk';
+                      const isChecked = isPGK 
+                        ? (ulanganAnswers[q.id] || []).includes(opt)
+                        : ulanganAnswers[q.id] === opt;
+                      
+                      // Logika pewarnaan jika sudah dikumpulkan
+                      let bgClass = "bg-white hover:bg-blue-50 border-gray-300";
+                      let textClass = "text-gray-700";
+                      
+                      if (ulanganScore !== null) {
+                        const isCorrectOption = isPGK ? q.answers.includes(opt) : q.answer === opt;
+                        if (isCorrectOption) {
+                           bgClass = "bg-green-100 border-green-500";
+                           textClass = "text-green-800 font-semibold";
+                        } else if (isChecked && !isCorrectOption) {
+                           bgClass = "bg-red-100 border-red-500";
+                           textClass = "text-red-800 line-through";
+                        } else {
+                           bgClass = "bg-gray-100 border-gray-200 opacity-60";
+                        }
+                      } else if (isChecked) {
+                        bgClass = "bg-blue-50 border-blue-500 ring-1 ring-blue-500";
+                        textClass = "text-blue-800 font-medium";
+                      }
+
+                      return (
+                        <div 
+                          key={opt}
+                          onClick={() => ulanganScore === null && (isPGK ? handlePGK(q.id, opt) : handlePG(q.id, opt))}
+                          className={`flex items-center gap-3 p-4 rounded-lg border cursor-pointer transition-all ${bgClass}`}
+                        >
+                          <div className={`w-5 h-5 shrink-0 flex items-center justify-center border rounded ${isPGK ? 'rounded-md' : 'rounded-full'} ${isChecked ? 'border-blue-600 bg-blue-600' : 'border-gray-400 bg-white'}`}>
+                            {isChecked && <CheckSquare className="w-3.5 h-3.5 text-white" />}
+                          </div>
+                          <span className={`select-none ${textClass}`}>{opt}</span>
+                          
+                          {/* Ikon tambahan untuk review */}
+                          {ulanganScore !== null && (isPGK ? q.answers.includes(opt) : q.answer === opt) && (
+                            <CheckCircle2 className="w-5 h-5 text-green-600 ml-auto" />
+                          )}
+                          {ulanganScore !== null && isChecked && !(isPGK ? q.answers.includes(opt) : q.answer === opt) && (
+                            <XCircle className="w-5 h-5 text-red-600 ml-auto" />
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {ulanganScore === null ? (
+          <button 
+            onClick={submitUlangan}
+            className="mt-8 w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white text-lg font-bold py-4 rounded-xl shadow-lg transition-transform transform hover:-translate-y-0.5"
+          >
+            Kumpulkan Ulangan
+          </button>
+        ) : (
+          <div className="mt-8 text-center">
+            <button 
+              onClick={() => { setUlanganScore(null); setUlanganAnswers({}); window.scrollTo(0, 0); }}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-colors"
+            >
+              <RefreshCw className="w-5 h-5" /> Ulangi Ujian
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 font-sans pb-12">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-blue-600 p-2 rounded-lg">
+              <Calculator className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900 leading-tight">MathExplore SMP</h1>
+              <p className="text-xs text-gray-500 font-medium">Kelas 7 - Bilangan Bulat</p>
+            </div>
+          </div>
+          
+          {/* Navigation */}
+          <nav className="flex space-x-1 bg-gray-100 p-1 rounded-lg overflow-x-auto">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => handleTabChange(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                }`}
+              >
+                {tab.icon}
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        {activeTab === 'materi' && <MateriSection />}
+        {activeTab === 'aktivitas' && <AktivitasSection />}
+        {activeTab === 'kuis' && <KuisSection />}
+        {activeTab === 'ulangan' && <UlanganSection />}
+        
+        {/* Navigation Buttons Footer */}
+        <div className="mt-8 flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+          <button 
+            disabled={activeTab === tabs[0].id}
+            onClick={() => handleTabChange(tabs[tabs.findIndex(t => t.id === activeTab) - 1].id)}
+            className="flex items-center gap-2 px-4 py-2 text-blue-600 font-medium disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" /> Sebelumnya
+          </button>
+          
+          <button 
+            disabled={activeTab === tabs[tabs.length - 1].id}
+            onClick={() => handleTabChange(tabs[tabs.findIndex(t => t.id === activeTab) + 1].id)}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-700 rounded-lg transition-colors"
+          >
+            Selanjutnya <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </main>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.4s ease-out forwards;
+        }
+      `}} />
+    </div>
+  );
+}
